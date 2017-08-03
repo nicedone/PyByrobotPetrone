@@ -68,6 +68,12 @@ Check [/launch/control_joy.launch](/launch/control_joy.launch).
 + Take off : Y Button
 + Landing : A Button
 
+## Python Package
+
+This package is also directly used by python.
+
+See [/scripts/petrone.py](/scripts/petrone.py)
+
 ## Dependencies
 
 ### bluepy & BlueZ for Bluetooth LE Connection
