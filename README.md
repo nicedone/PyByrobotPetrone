@@ -65,8 +65,11 @@ Send a command to change flight mode.
 
 Check [/launch/control_joy.launch](/launch/control_joy.launch).
  
-+ Take off : Y Button
+[Based on Xbox 360 controller]
++ Takeoff : B Button
 + Landing : A Button
++ Flight  : Y Button
++ Flip    : X Button
 
 ## Python Package
 
