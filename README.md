@@ -1,6 +1,8 @@
 # PyByrobotPetrone
 Python Implementation for [Byrobot Petrone](http://en.byrobot.co.kr/eng/petrone/) Controller
 
+![Petrone Drone](http://byrobot.co.kr/eng/wp-content/uploads/petrone_A-1024x576.jpg)
+
 + Support Byrobot's Petrone Drone
 + Publishes on-board sensors in ROS Message formats
 + Subscribes control command in ROS Message formats
