@@ -2,6 +2,7 @@ import logging
 from ctypes import *
 
 import time
+
 from bluepy import btle
 from bluepy.blescan import dump_services
 
