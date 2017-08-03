@@ -1,0 +1,13 @@
+<package>
+  <name>petrone_ros</name>
+  <version>0.0.1</version>
+  <description>Petrone Ros</description>
+
+  <maintainer email="ildoo@ildoo.net">curtis.kim</maintainer>
+
+  <license>GNU2.0</license>
+
+  <!-- Dependencies which this package needs to build itself. -->
+  <buildtool_depend>catkin</buildtool_depend>
+
+</package>

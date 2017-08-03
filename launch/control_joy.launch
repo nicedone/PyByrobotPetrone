@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <arg name="video" default="rtsp://192.168.100.1:554/cam1/mpeg4/" />
+    <arg name="video_width" default="480" />
+    <arg name="video_height" default="320" />
+    <arg name="video_visualize" default="false" />
+
+    <arg name="petrone_addr" default="50:8c:b1:5f:16:b7" />  <!-- 50:8c:b1:5f:16:b7 -->
+    <arg name="petrone_hci" default="0" />
+
+    <!-- Joystick - XBOX -->
+    <!-- https://github.com/whoenig/crazyflie_ros/blob/master/crazyflie_demo/launch/xbox360.launch -->
+    <!-- Note that axis IDs are those from the joystick message plus one, to be able to invert axes by specifiying either positive or negative axis numbers.-->
+    <!-- Axis 2 from joy message thus has to be set as '3' or '-3'(inverted mode) below-->
+    <node name="quadrotor_teleop" pkg="hector_quadrotor_teleop" type="quadrotor_teleop">
+        <param name="x_axis" value="5"/>
+        <param name="y_axis" value="4"/>
+        <param name="z_axis" value="2"/>
+        <param name="yaw_axis" value="1"/>
+        <param name="x_velocity_max" value="100"/>
+        <param name="y_velocity_max" value="-1000"/>
+        <param name="z_velocity_max" value="100"/>
+        <param name="yaw_velocity_max" value="-100"/>
+    </node>
+
+    <node name="petrone_ros_joy" pkg="petrone_ros" type="demo_joy.py" output="screen" required="true">
+    </node>
+
+    <arg name="joy_dev" default="/dev/input/js0" />
+    <node name="joy" pkg="joy" type="joy_node" output="screen" >
+        <param name="dev" value="$(arg joy_dev)" />
+    </node>
+
+    <!-- Cam on Petrone -->
+    <!--
+    <include file="$(find video_stream_opencv)/launch/camera.launch">
+        <arg name="camera_name" value="videofile" />
+        <arg name="video_stream_provider" value="$(arg video)" />
+        <arg name="fps" value="30" />
+        <arg name="frame_id" value="videofile_frame" />
+        <arg name="camera_info_url" value="file://$(find petrone_ros)/camera_info/fpv_camera2.yaml" />
+        <arg name="width" value="$(arg video_width)"/>
+        <arg name="height" value="$(arg video_height)"/>
+        <arg name="visualize" value="$(arg video_visualize)" />
+    </include>
+    -->
+
+    <!-- Petrone Control Node -->
+    <node name="petrone_ros_node" pkg="petrone_ros" type="rosmain.py" output="screen" required="true">
+        <param name="hci" value="$(arg petrone_hci)" />
+        <param name="address" value="$(arg petrone_addr)" />
+    </node>
+
+</launch>
