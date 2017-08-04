@@ -12,8 +12,8 @@ from constants import PETRONE_FLIGHT_EVENT
 class Controller:
     def __init__(self, joy_topic):
         rospy.loginfo("waiting for petrone")
-        # rospy.wait_for_message('battery', Float32)
-        # rospy.loginfo("found petrone")
+        rospy.wait_for_message('battery', Float32)
+        rospy.loginfo("found petrone")
 
         # fly control publisher
         self.pub_fly = rospy.Publisher('cmd_fly', Int8, queue_size=1)

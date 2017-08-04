@@ -62,17 +62,16 @@ class RosPetroneNode:
     def run(self):
         rospy.sleep(2.0)
         while not self.is_disconnected:
-            # imu = self.petrone.get_imu()
+            imu = self.petrone.get_imu()
             # TODO
-            # rospy.sleep(1.0)
+            rospy.sleep(1.0)
 
-            # state = self.petrone.get_state()
-            # if self.last_values['battery'] != state['battery']:
-            #     self.last_values['battery'] = state['battery']
-            #     self.pub_battery.publish(state['battery'])
+            state = self.petrone.get_state()
+            if self.last_values['battery'] != state['battery']:
+                self.last_values['battery'] = state['battery']
+                self.pub_battery.publish(state['battery'])
 
             # TODO
-
             rospy.sleep(1.0)
 
     def set_robot_mode(self, mode):

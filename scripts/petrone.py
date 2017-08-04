@@ -2,12 +2,25 @@ import logging
 from ctypes import *
 
 import time
+from threading import Lock
 
 from bluepy import btle
 from bluepy.blescan import dump_services
 
 from constants import *
 from scan import petrone_list
+
+
+ble_lock = Lock()
+
+
+def on_thread_lock(original_function):
+    def new_function(*args, **kwargs):
+        ble_lock.acquire()
+        result = original_function(*args, **kwargs)
+        ble_lock.release()
+        return result
+    return new_function
 
 
 class Petrone:
@@ -65,6 +78,7 @@ class Petrone:
     def _read_drone_data(self):
         return self._get_drone_data().read()
 
+    @on_thread_lock
     def mode(self, mode):
         bytelist = [
             PETRONE_DATATYPE.Command,
@@ -73,6 +87,7 @@ class Petrone:
         ]
         self._get_drone_conf().write(Petrone.bytes_to_str(bytelist))
 
+    @on_thread_lock
     def _flight_cmd(self, cmd):
         if not self.send_cmd:
             return
@@ -98,6 +113,7 @@ class Petrone:
     def cmd_accident(self):
         self._flight_cmd(PETRONE_FLIGHT_EVENT.Accident)
 
+    @on_thread_lock
     def control(self, roll, pitch, yaw, throttle):
         bytelist = [
             PETRONE_DATATYPE.Control,
@@ -105,6 +121,7 @@ class Petrone:
         ]
         self._get_drone_conf().write(Petrone.bytes_to_str(bytelist))
 
+    @on_thread_lock
     def set_led(self, led_mode, led_color_idx):
         if isinstance(led_color_idx, str):
             led_color_idx = PETRONE_LED_COLOR.get_value(led_color_idx)
@@ -116,6 +133,7 @@ class Petrone:
         ]
         self._get_drone_conf().write(Petrone.bytes_to_str(bytelist))
 
+    @on_thread_lock
     def _request_info(self, info_key):
         bytelist = [
             PETRONE_DATATYPE.Command,
