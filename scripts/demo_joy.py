@@ -24,7 +24,6 @@ class Controller:
         rospy.Subscriber(joy_topic, Joy, self.cb_joy)
 
     def cb_joy(self, data):
-        rospy.loginfo(data)
         for i in range(0, len(data.buttons)):
             if i == 0 and data.buttons[i] == 1: # A
                 self.pub_fly.publish(PETRONE_FLIGHT_EVENT.Landing)

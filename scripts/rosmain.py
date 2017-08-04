@@ -67,7 +67,7 @@ class RosPetroneNode:
             rospy.sleep(1.0)
 
             state = self.petrone.get_state()
-            if self.last_values['battery'] != state['battery']:
+            if 'battery' in state.keys() and self.last_values['battery'] != state['battery']:
                 self.last_values['battery'] = state['battery']
                 self.pub_battery.publish(state['battery'])
 

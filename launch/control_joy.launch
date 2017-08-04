@@ -5,7 +5,7 @@
     <arg name="video" default="rtsp://192.168.100.1:554/cam1/mpeg4/" />
     <arg name="video_width" default="480" />
     <arg name="video_height" default="320" />
-    <arg name="video_visualize" default="false" />
+    <arg name="video_visualize" default="true" />
 
     <arg name="petrone_addr" default="50:8c:b1:5f:16:b7" />  <!-- 50:8c:b1:5f:16:b7 -->
     <arg name="petrone_hci" default="0" />
@@ -34,7 +34,6 @@
     </node>
 
     <!-- Cam on Petrone -->
-    <!--
     <include file="$(find video_stream_opencv)/launch/camera.launch">
         <arg name="camera_name" value="videofile" />
         <arg name="video_stream_provider" value="$(arg video)" />
@@ -45,7 +44,6 @@
         <arg name="height" value="$(arg video_height)"/>
         <arg name="visualize" value="$(arg video_visualize)" />
     </include>
-    -->
 
     <!-- Petrone Control Node -->
     <node name="petrone_ros_node" pkg="petrone_ros" type="rosmain.py" output="screen" required="true">
