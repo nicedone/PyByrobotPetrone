@@ -107,6 +107,12 @@ class PETRONE_MODE:
     FlightFPV = 0x12
 
 
+class PETRONE_TRIMTYPE:
+    RollIncrease = 1
+    ThrottleIncrease = 7
+    ThrottleDecrease = 8
+
+
 class PETRONE_LED_COLOR:
     c = '''AliceBlue,AntiqueWhite,Aqua,Aquamarine,Azure,Beige,Bisque,Black,BlanchedAlmond,Blue,BlueViolet,
     'Brown,BurlyWood,CadetBlue,Chartreuse,Chocolate,Coral,CornflowerBlue,Cornsilk,Crimson,Cyan,DarkBlue,

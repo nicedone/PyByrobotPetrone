@@ -114,6 +114,15 @@ class Petrone:
         self._flight_cmd(PETRONE_FLIGHT_EVENT.Accident)
 
     @on_thread_lock
+    def set_trim(self, trim_chg):
+        bytelist = [
+            PETRONE_DATATYPE.Command,
+            PETRONE_COMMAND.Trim,
+            trim_chg
+        ]
+	self._get_drone_conf().write(Petrone.bytes_to_str(bytelist)) 
+
+    @on_thread_lock
     def control(self, roll, pitch, yaw, throttle):
         bytelist = [
             PETRONE_DATATYPE.Control,

@@ -9,6 +9,7 @@
 
     <arg name="petrone_addr" default="50:8c:b1:5f:16:b7" />  <!-- 50:8c:b1:5f:16:b7 -->
     <arg name="petrone_hci" default="0" />
+    <arg name="petrone_base_thrust" default="5" />
 
     <!-- Joystick - XBOX -->
     <!-- https://github.com/whoenig/crazyflie_ros/blob/master/crazyflie_demo/launch/xbox360.launch -->
@@ -20,9 +21,9 @@
         <param name="z_axis" value="2"/>
         <param name="yaw_axis" value="1"/>
         <param name="x_velocity_max" value="100"/>
-        <param name="y_velocity_max" value="-1000"/>
+        <param name="y_velocity_max" value="100"/>
         <param name="z_velocity_max" value="100"/>
-        <param name="yaw_velocity_max" value="-100"/>
+        <param name="yaw_velocity_max" value="100"/>
     </node>
 
     <node name="petrone_ros_joy" pkg="petrone_ros" type="demo_joy.py" output="screen" required="true">
@@ -49,6 +50,7 @@
     <node name="petrone_ros_node" pkg="petrone_ros" type="rosmain.py" output="screen" required="true">
         <param name="hci" value="$(arg petrone_hci)" />
         <param name="address" value="$(arg petrone_addr)" />
+        <param name="base_thrust" value="$(arg petrone_base_thrust)" />
     </node>
 
 </launch>
