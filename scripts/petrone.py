@@ -123,8 +123,8 @@ class Petrone:
 
     @on_thread_lock
     def set_led(self, led_mode, led_color_idx):
-        if isinstance(led_color_idx, str):
-            led_color_idx = PETRONE_LED_COLOR.get_value(led_color_idx)
+        if not isinstance(led_color_idx, int):
+            led_color_idx = PETRONE_LED_COLOR.get_value(str(led_color_idx))
         bytelist = [
             PETRONE_DATATYPE.LedMode,
             led_mode,

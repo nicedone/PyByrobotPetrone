@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import rospy
+import json
 from collections import defaultdict
 from std_msgs.msg import Float32, String, Int8
 from sensor_msgs.msg import Imu
@@ -15,6 +16,7 @@ class RosPetroneNode:
         # subscriber
         self.sub_flight = rospy.Subscriber('cmd_fly', Int8, self.cb_fly, queue_size=1)
         self.sub_cmd = rospy.Subscriber('cmd_vel', Twist, self.cb_cmd, queue_size=1)
+        self.sub_color = rospy.Subscriber('led_color', String, self.cb_color, queue_size=1)
 
         # publisher
         self.pub_battery = rospy.Publisher('battery', Float32, queue_size=1)
@@ -38,13 +40,16 @@ class RosPetroneNode:
         self.is_disconnected = True
         self.petrone.disconnect()
 
+    def cb_color(self, data):
+        j = json.loads(data.data)
+        self.petrone.set_led(j['led_mode'], j['led_color'])
+
     def cb_cmd(self, data):
         c_gain = 50
         self.petrone.control(int(data.linear.y * c_gain)
                             , int(data.linear.x * c_gain * -1)
                             , int(data.angular.z * c_gain * -1)
                             , int(data.linear.z * c_gain * -1))
-        rospy.sleep(0.04)
 
     def cb_fly(self, data):
         rospy.loginfo('Command: %s', data)
