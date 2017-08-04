@@ -74,24 +74,27 @@ class RosPetroneNode:
             self.petrone.cmd_accident()
 
     def run(self):
+        rospy.sleep(0.5)
+        skip_cnt = 0
         while not self.is_disconnected:
-            imu = self.petrone.get_imu()
-            # TODO
-            rospy.sleep(0.01)
+            if skip_cnt % 20 == 0:
+                imu = self.petrone.get_imu()
 
-            state = self.petrone.get_state()
-            if 'battery' in state.keys() and self.last_values['battery'] != state['battery']:
-                self.last_values['battery'] = state['battery']
-                self.pub_battery.publish(state['battery'])
+            if skip_cnt % 200 == 0:
+                state = self.petrone.get_state()
+                if 'battery' in state.keys() and self.last_values['battery'] != state['battery']:
+                    self.last_values['battery'] = state['battery']
+                    self.pub_battery.publish(state['battery'])
+                    rospy.loginfo('battery={}'.format(state['battery']))
+                skip_cnt = 1
 
-            # TODO
-            rospy.sleep(0.01)
-
+            skip_cnt += 1
             if time.time() - self.twist_at < 5:
 		 self.petrone.control(int(self.twist.linear.y * c_gain)
 				    , int(self.twist.linear.x * c_gain * -1)
 				    , int(self.twist.angular.z * c_gain * -1)
-				    , int(self.twist.linear.z * c_gain)) 
+				    , int(self.twist.linear.z * c_gain))
+                 rospy.sleep(0.01) 
 
     def set_robot_mode(self, mode):
         self.petrone.mode(mode)
