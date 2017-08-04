@@ -17,8 +17,12 @@ ble_lock = Lock()
 def on_thread_lock(original_function):
     def new_function(*args, **kwargs):
         ble_lock.acquire()
-        result = original_function(*args, **kwargs)
-        ble_lock.release()
+        try:
+            result = original_function(*args, **kwargs)
+        except:
+            return
+        finally:
+            ble_lock.release()
         return result
     return new_function
 
@@ -151,7 +155,7 @@ class Petrone:
         ]
         self._get_drone_conf().write(Petrone.bytes_to_str(bytelist), True)
         b = bytearray(self._get_drone_data().read())
-        if b[0] != info_key:
+        if len(b) <= 0 or b[0] != info_key:
             return False, None
 
         return True, b

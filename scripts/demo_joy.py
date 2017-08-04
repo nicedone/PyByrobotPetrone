@@ -51,6 +51,7 @@ class Controller:
                 self.pub_fly.publish(PETRONE_FLIGHT_EVENT.Flight)
                 rospy.loginfo("GOT REMOTE KEY => [Y: Flight]")
 
+
 if __name__ == '__main__':
     rospy.init_node('petrone_demo_joystick', anonymous=True)
     joy_topic = rospy.get_param("~joy_topic", "joy")
