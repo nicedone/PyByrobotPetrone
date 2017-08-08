@@ -73,7 +73,7 @@ Check [/launch/control_joy.launch](/launch/control_joy.launch).
 
 ## Python Package
 
-This package is also directly used by python.
+This package can be also directly used in python.
 
 See [/scripts/petrone.py](/scripts/petrone.py)
 
